@@ -25,8 +25,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.taikaisensei.R
 
 @Composable
 fun PantallaInicio(
@@ -34,6 +37,14 @@ fun PantallaInicio(
     onVerHistorialClick: () -> Unit,
     onMarcadorClick: () -> Unit
 ) {
+    // Fondo con degradado vertical
+    val backgroundGradient = Brush.verticalGradient(
+        colors = listOf(
+            Color(0xFFA2A2A2),
+            Color(0xFFFFFFFF),
+            Color(0xFFA2A2A2)
+        )
+    )
 
     // Animaciones e interacción para el botón "Crear Nuevo Diagrama"
     val interactionSourceCrear = remember { MutableInteractionSource() }
@@ -66,18 +77,26 @@ fun PantallaInicio(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(brush = backgroundGradient)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier.align(Alignment.Center)
         ) {
-            // Futuro logo de la aplicación
+            // Logo de la aplicación
             Box(
                 modifier = Modifier
                     .height(400.dp)
                     .width(400.dp)
-            )
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.taikaisensei_logo),
+                    contentDescription = "Logo TaikaiSensei",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
 
             // Botón para crear nuevo diagrama
             BotonInicio(
