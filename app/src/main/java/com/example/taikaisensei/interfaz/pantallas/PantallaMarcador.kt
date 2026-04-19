@@ -18,6 +18,18 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun PantallaMarcador(navController: NavController) {
+    val context = LocalContext.current
+
+    // Para que la pantalla siempre esté en horizontal, así el marcador queda bien amplio
+    LaunchedEffect(Unit) {
+        (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    }
+    // Cuando salgamos de aquí, volvemos a la orientación normal (vertical)
+    DisposableEffect(Unit) {
+        onDispose {
+            (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+    }
 
     // Guardamos el tiempo que se selecciona y el que va quedando en el cronómetro
     var tiempoSeleccionado by remember { mutableStateOf(90_00) }  // 1:30 en centésimas
@@ -73,7 +85,13 @@ fun PantallaMarcador(navController: NavController) {
     val formatoTiempo = String.format("%02d:%02d.%02d", minutos, segundos, centesimas)
 
     Box(modifier = Modifier.fillMaxSize()) {
+        // Fondo dividido en rojo y azul para AKA y AO
+        Row(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.weight(1f).fillMaxHeight().background(Color.Red))
+            Box(modifier = Modifier.weight(1f).fillMaxHeight().background(Color.Blue))
+        }
 
+        // Aquí van los controles encima del fondo
         Row(
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
