@@ -1,6 +1,8 @@
 package com.example.taikaisensei.interfaz.pantallas
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -18,11 +20,14 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.taikaisensei.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -60,6 +65,24 @@ fun PantallaLogin(
     )
     val haptic = LocalHapticFeedback.current
 
+    // Animación del color del botón según estado de interacción
+    val topColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF4A4A4A) else Color(0xFF3A3A3A),
+        label = "TopColor"
+    )
+    val centerColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF1A1A1A) else Color(0xFF000000),
+        label = "CenterColor"
+    )
+    val bottomColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF4A4A4A) else Color(0xFF3A3A3A),
+        label = "BottomColor"
+    )
+
+    val buttonGradient = Brush.verticalGradient(
+        colors = listOf(topColor, centerColor, bottomColor)
+    )
+
     // Contenedor principal de la pantalla con fondo
     Box(
         modifier = Modifier
@@ -71,9 +94,22 @@ fun PantallaLogin(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier.align(Alignment.Center)
-        ) {}
+        ) {
+            // Logo o imagen principal
+            Box(
+                modifier = Modifier
+                    .height(200.dp)
+                    .width(200.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.taikaisensei_logo),
+                    contentDescription = "Logo",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
 
-            // Campo para ingresar correo
+            // Campo para ingresar correo o usuario
             TextField(
                 value = email.value,
                 onValueChange = { email.value = it },
@@ -84,6 +120,16 @@ fun PantallaLogin(
                     .padding(horizontal = 24.dp),
                 singleLine = true
             )
+
+            // Mensaje de error para correo
+            if (emailError.value) {
+                Text(
+                    text = "Correo no registrado",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start = 24.dp)
+                )
+            }
 
             // Campo para ingresar contraseña
             TextField(
@@ -97,6 +143,16 @@ fun PantallaLogin(
                 visualTransformation = PasswordVisualTransformation()
             )
 
+            // Mensaje de error para contraseña
+            if (passwordError.value) {
+                Text(
+                    text = "Contraseña incorrecta",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start = 24.dp)
+                )
+            }
+
             // Botón para iniciar sesión
             Box(
                 modifier = Modifier
@@ -105,6 +161,7 @@ fun PantallaLogin(
                     .offset(y = 6.dp)
                     .scale(scale)
                     .clip(RoundedCornerShape(40.dp))
+                    .background(brush = buttonGradient)
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null
@@ -151,6 +208,7 @@ fun PantallaLogin(
             }
         }
     }
+}
 
 // Función para autenticación usando Firebase
 fun loginWithFirebase(
