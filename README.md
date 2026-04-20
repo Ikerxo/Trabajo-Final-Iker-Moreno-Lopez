@@ -1,6 +1,8 @@
 # Nombre de la Aplicación
 
-Proyecto de Fin de Grado Superior – Desarrollo de Aplicaciones Multiplataforma (DAM) (KRT "Karate Records Tool")
+## KRT (Karate Records Tool)
+
+Proyecto de Fin de Grado Superior – Desarrollo de Aplicaciones Multiplataforma (DAM)
 
 ---
 
