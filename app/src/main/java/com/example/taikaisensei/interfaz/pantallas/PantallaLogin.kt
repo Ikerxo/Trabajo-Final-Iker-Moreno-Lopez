@@ -124,7 +124,7 @@ fun PantallaLogin(
             // Mensaje de error para correo
             if (emailError.value) {
                 Text(
-                    text = "Correo no registrado",
+                    text = "Correo no autorizado",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 24.dp)
@@ -146,7 +146,7 @@ fun PantallaLogin(
             // Mensaje de error para contraseña
             if (passwordError.value) {
                 Text(
-                    text = "Contraseña incorrecta",
+                    text = "La contraseña introducida no es correcta",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 24.dp)
