@@ -42,10 +42,15 @@ fun PantallaCompetidores(
         "Octavos de Final" to 16,
         "Dieciseisavos de Final" to 32
     )
+    // Fondo con degradado vertical
+    val backgroundGradient = Brush.verticalGradient(
+        listOf(Color(0xFF1A1A1A), Color(0xFF121212), Color(0xFF1A1A1A))
+    )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(backgroundGradient)
             .padding(horizontal = 16.dp, vertical = 45.dp)
     ) {
         when {
@@ -54,13 +59,20 @@ fun PantallaCompetidores(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 80.dp)
                 ) {
-                    Text("Ingresa el nombre del torneo:", style = MaterialTheme.typography.titleLarge, color = Color.White)
+                    Text(
+                        "Ingresa el nombre del torneo:",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White
+                    )
 
                     TextField(
                         value = nombreTorneo,
                         onValueChange = { nombreTorneo = it },
                         label = { Text("Nombre del torneo") },
+                        modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.colors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.LightGray,
@@ -72,12 +84,17 @@ fun PantallaCompetidores(
                         )
                     )
 
-                    Text("Ingresa la categoría:", style = MaterialTheme.typography.titleLarge, color = Color.White)
+                    Text(
+                        "Ingresa la categoría:",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White
+                    )
 
                     TextField(
                         value = categoriaTorneo,
                         onValueChange = { categoriaTorneo = it },
                         label = { Text("Categoría") },
+                        modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.colors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.LightGray,
