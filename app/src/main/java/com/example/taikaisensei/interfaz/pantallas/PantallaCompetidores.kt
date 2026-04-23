@@ -106,7 +106,25 @@ fun PantallaCompetidores(
                         )
                     )
                 }
+            // Botones para continuar o volver al inicio
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                BotonDegradadoRojoAzul(texto = "Siguiente") {
+                    if (nombreTorneo.isNotBlank() && categoriaTorneo.isNotBlank()) {
+                        mostrarFormularioInicial = false
+                    }
+                }
+
+                BotonDegradadoRojoAzul(texto = "Volver al inicio") {
+                    onVolverInicio()
+                }
             }
+        }
 
             // Pantalla para seleccionar la fase inicial del torneo
             !faseInicializada -> {
