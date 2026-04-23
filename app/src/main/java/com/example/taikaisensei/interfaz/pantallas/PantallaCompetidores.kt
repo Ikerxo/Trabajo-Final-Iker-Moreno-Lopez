@@ -1,5 +1,6 @@
 package com.example.taikaisensei.interfaz.pantallas
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -14,8 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.taikaisensei.R
 import com.example.taikaisensei.datos.Competidor
 
 @Composable
@@ -106,6 +110,7 @@ fun PantallaCompetidores(
                         )
                     )
                 }
+
             // Botones para continuar o volver al inicio
             Column(
                 modifier = Modifier
@@ -167,7 +172,25 @@ fun PantallaCompetidores(
                             }
                         }
                     }
+
+                // Imagen honorifica al "Sr. Miyagi"
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 24.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.sr_miyagi_sin_fondo),
+                        contentDescription = "Sr. Miyagi",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(700.dp)
+                            .align(Alignment.Center)
+                    )
                 }
+            }
 
                 // Botón para confirmar selección y generar competidores
                 Box(
