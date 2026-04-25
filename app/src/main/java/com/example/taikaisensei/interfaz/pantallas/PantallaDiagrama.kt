@@ -37,6 +37,11 @@ fun PantallaDiagrama(
     var campeon by remember { mutableStateOf<Competidor?>(null) }
     val scrollState = rememberScrollState()     // Estado para el scroll vertical
 
+    // Cada vez que cambia la ronda actual, hace scroll al inicio
+    LaunchedEffect(rondaActualIndex) {
+        scrollState.animateScrollTo(0)
+    }
+
     Column{
         Spacer(modifier = Modifier.height(32.dp))
 
