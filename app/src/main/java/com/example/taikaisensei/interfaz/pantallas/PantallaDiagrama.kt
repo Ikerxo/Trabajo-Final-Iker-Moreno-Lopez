@@ -2,12 +2,14 @@ package com.example.taikaisensei.interfaz.pantallas
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -42,7 +44,13 @@ fun PantallaDiagrama(
         scrollState.animateScrollTo(0)
     }
 
-    Column{
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF101010))  // Fondo oscuro para mejor contraste
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Spacer(modifier = Modifier.height(32.dp))
 
         // Título con número de ronda
@@ -56,7 +64,13 @@ fun PantallaDiagrama(
                 .verticalScroll(scrollState)
         ) {
             rondaActual.forEach { enfrentamiento ->
-                Column{
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .border(1.dp, Color.White, RoundedCornerShape(8.dp)) // Borde para delimitar
+                        .padding(8.dp)
+                ) {
                     // Indicador para que el usuario seleccione ganador
                     Text("Selecciona al ganador:", style = MaterialTheme.typography.bodyLarge, color = Color.White)
 
@@ -67,13 +81,23 @@ fun PantallaDiagrama(
                         // Botón para seleccionar competidor 1 como ganador
                         Button(
                             onClick = { enfrentamiento.ganador = enfrentamiento.competidor1.nombre },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (enfrentamiento.ganador == enfrentamiento.competidor1.nombre)
+                                    Color(0xFFB71C1C) else Color(0xFFEF9A9A),  // Color distinto si está seleccionado
+                                contentColor = Color.White
+                            )
                         ) {
                             Text("${enfrentamiento.competidor1.nombre} (${enfrentamiento.competidor1.club})")
                         }
 
                         // Botón para seleccionar competidor 2 como ganador
                         Button(
-                            onClick = { enfrentamiento.ganador = enfrentamiento.competidor2.nombre }
+                            onClick = { enfrentamiento.ganador = enfrentamiento.competidor2.nombre },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (enfrentamiento.ganador == enfrentamiento.competidor2.nombre)
+                                    Color(0xFF0D47A1) else Color(0xFF90CAF9),
+                                contentColor = Color.White
+                            )
                         ) {
                             Text("${enfrentamiento.competidor2.nombre} (${enfrentamiento.competidor2.club})")
                         }
