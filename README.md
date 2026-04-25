@@ -64,4 +64,21 @@ Iker Moreno López
 
 
 
-## Aqui va a ir la parte de tutorial de uso
+# Guía de uso para KRT
+
+## 1. Inicio de sesión
+
+En la primera instancia de la aplicación se encuentra el inicio de sesión, aqui se debera acceder con las credenciales de acceso de un usuario previamente autorizado por el administrador (correo electronico y contraseña)
+
+A modo de prueba, se pueden utilizar las siguientes credenciales:
+
+
+- Correo: tribunal1krt@gmail.com 
+- Contraseña: tribunal1
+
+  
+- Correo: tribunal2krt@gmail.com
+- Contraseña: tribunal2
+
+  
+Verificadas las credenciales, se accedera al menú principal de la aplicación.
