@@ -1,5 +1,6 @@
 package com.example.taikaisensei.interfaz.pantallas
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -34,6 +36,21 @@ fun PantallaHistorial(navController: NavController) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(targetValue = if (isPressed) 0.95f else 1f, label = "scaleAnim")
+
+    // Animación de colores del botón de volver
+    val topColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF4A4A4A) else Color(0xFF3A3A3A),
+        label = "TopColor"
+    )
+    val centerColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF1A1A1A) else Color(0xFF000000),
+        label = "CenterColor"
+    )
+    val bottomColor by animateColorAsState(
+        targetValue = if (isPressed) Color(0xFF4A4A4A) else Color(0xFF3A3A3A),
+        label = "BottomColor"
+    )
+    val buttonGradient = Brush.verticalGradient(colors = listOf(topColor, centerColor, bottomColor))
 
     // Obtención del usuario autenticado en Firebase
     val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -144,6 +161,7 @@ fun PantallaHistorial(navController: NavController) {
                     spotColor = Color(0xFFFEE37D)
                 )
                 .clip(RoundedCornerShape(40.dp))
+                .background(buttonGradient) // Degradado animado
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null
