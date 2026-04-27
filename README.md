@@ -83,7 +83,7 @@ A modo de prueba, se pueden utilizar las siguientes credenciales:
   
 Verificadas las credenciales, se accedera a la home de la aplicación.
 
-### Home
+###  2. Home
 
 En la pantalla Home el usuario podra acceder a las diversas funciones de la aplicación pulsando en la opción que desee:
 
