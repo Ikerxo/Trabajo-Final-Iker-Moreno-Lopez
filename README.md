@@ -81,4 +81,10 @@ A modo de prueba, se pueden utilizar las siguientes credenciales:
 - Contraseña: tribunal2
 
   
-Verificadas las credenciales, se accedera al menú principal de la aplicación.
+Verificadas las credenciales, se accedera a la home de la aplicación.
+
+## Home
+
+En la pantalla Home el usuario podra acceder a las diversas funciones de la aplicación pulsando en la opción que desee:
+
+1. - Crear Nuevo Diagrama: En esta el usuario podra gestionar una categoria como borrador de principio a fin.
