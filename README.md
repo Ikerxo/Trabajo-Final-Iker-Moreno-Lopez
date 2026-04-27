@@ -88,3 +88,7 @@ Verificadas las credenciales, se accedera a la home de la aplicación.
 En la pantalla Home el usuario podra acceder a las diversas funciones de la aplicación pulsando en la opción que desee:
 
 1. - Crear Nuevo Diagrama: En esta el usuario podra gestionar una categoria como borrador de principio a fin.
+  
+2. - Ver Historial de Torneos: En esta el usuario podra consultar los resultados de las distintas categorías que haya ido creando a lo largo del evento.
+
+3. - Marcador Kumite: En esta el usuario podra manipular un marcador para la modalidad de Kumite totalmente reglamentario a la normativa vigente.
