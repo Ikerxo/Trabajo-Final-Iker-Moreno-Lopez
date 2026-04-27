@@ -1,7 +1,7 @@
 package com.example.taikaisensei.interfaz.pantallas
 
-
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -30,7 +30,7 @@ fun PantallaHistorial(navController: NavController) {
     var torneos by remember { mutableStateOf<List<TorneoFinalizado>>(emptyList()) }
     var cargando by remember { mutableStateOf(true) }
 
-    // Preparación para animaciones y retroalimentación háptica del botón
+    // Preparación para animaciones y reescalado del boton al presionar
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(targetValue = if (isPressed) 0.95f else 1f, label = "scaleAnim")
@@ -84,6 +84,8 @@ fun PantallaHistorial(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFF101010)) // Fondo oscuro
+            .padding(vertical = 50.dp, horizontal = 16.dp)
     ) {
         // Título
         Text(
