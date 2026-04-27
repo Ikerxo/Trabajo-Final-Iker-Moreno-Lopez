@@ -1,18 +1,18 @@
 # Nombre de la Aplicación
 
-## KRT (Karate Records Tool)
+### KRT (Karate Records Tool)
 
 Proyecto de Fin de Grado Superior – Desarrollo de Aplicaciones Multiplataforma (DAM)
 
 ---
 
-## Descripción
+### Descripción
 
 Aplicación desarrollada para prevenir la generación de residuos, mejorar el impacto ambiental, fomentar la sostenibilidad y eficiencia, predicar con la economía circular y cambiar habitos a las organizaciones y personas que utilicen la aplicación.
 
 ---
 
-## Objetivo
+### Objetivo
 
 El objetivo principal del proyecto es digitalizar la gestión de competiciones de karate, actuando como herramienta de borrador para trabajadores y organizadores, con el fin de reducir el uso de papel y optimizar la preparación de eventos deportivos.
 
@@ -22,7 +22,7 @@ Con ello se busca mejorar la eficiencia organizativa, reducir el impacto ambient
 
 ---
 
-## Tecnologías utilizadas
+### Tecnologías utilizadas
 
 * Kotlin
 * Android Studio
@@ -30,7 +30,7 @@ Con ello se busca mejorar la eficiencia organizativa, reducir el impacto ambient
 
 ---
 
-## Funcionalidades principales
+### Funcionalidades principales
 
 * Crear Diagramas de competición
 * Consultas al Historial de Diagramas anteriores
@@ -38,7 +38,7 @@ Con ello se busca mejorar la eficiencia organizativa, reducir el impacto ambient
 
 ---
 
-## Instalación y ejecución
+### Instalación y ejecución
 
 ```bash
 git clone https://github.com/Ikerxo/Trabajo-Final-Iker-Moreno-L-pez.git
@@ -50,23 +50,23 @@ Abrir el proyecto en Android Studio y ejecutar en un emulador o dispositivo fís
 
 ---
 
-## Centro
+#### Centro
 
 IES LAS SALINAS
 
-## Curso
+#### Curso
 
 2º DESARROLLO DE APLICACIONES MULTIPLATAFORMA (DAM)
 
-## Autor
+#### Autor
 
 Iker Moreno López
 
 
 
-# Guía de uso para KRT
+## Guía de uso para KRT
 
-## 1. Inicio de sesión
+### 1. Inicio de sesión
 
 En la primera instancia de la aplicación se encuentra el inicio de sesión, aqui se debera acceder con las credenciales de acceso de un usuario previamente autorizado por el administrador (correo electronico y contraseña)
 
@@ -83,7 +83,7 @@ A modo de prueba, se pueden utilizar las siguientes credenciales:
   
 Verificadas las credenciales, se accedera a la home de la aplicación.
 
-## Home
+### Home
 
 En la pantalla Home el usuario podra acceder a las diversas funciones de la aplicación pulsando en la opción que desee:
 
