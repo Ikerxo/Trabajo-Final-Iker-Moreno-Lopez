@@ -96,10 +96,13 @@ En la pantalla Home el usuario podra acceder a las diversas funciones de la apli
 
 #### 2.1 Crear Nuevo Diagrama
 
-
+Esta función cuenta con varias pantallas, para comenzar nos pedira un nombre para el torneo y un nombre para la categoría ("Campeonato de España", "Junior Masculino >81kg"), despúes nos solicitara en que ronda comienza la categoria ("dieciseisavos""octavos""cuartos""semis"), la siguiente pantalla solicitara el nombre de los competidores y el nombre del club por el que compiten en el orden que tenga la categoria oficial ("Iker""Nisseishi"), una vez hecho esto la aplicación generara un listado con todos los combates en el que se debera elegir en cada enfrentamiento si gana Aka (Rojo) o Ao (Azul), una vez realizados todos los enfrentamientos se debera continuar hasta declarar un campeón y un subcampeón, estos datos se guardaran junto con los datos del torneo a nombre de la cuenta con la que se esta accediendo a la aplicación.
 
 #### 2.2 Ver Historial de Torneos
 
-
+Esta función solicita los datos de las categorías finalizadas por el usuario que esta accediendo a la aplicación, se muestra en una tarjeta el nombre del campeonato, categoria, campeón y subcampeón ("Campeonato de Castilla-La Mancha""Senior Masculino <80kg""Iker (Nisseishi)""David (Kidokan)").
+Estos datos se borraran cada miercoles posterior al fin de semana de competición para evitar saturación e incentivar el poder y la comunicación del administrador.
 
 #### 2.3 Marcador Kumite
+
+Esta función muestra por pantalla un marcador de la modalidad de kumite que cumple con los requisitos de la WKF (World Karate Federation), se podrán selecciónar los minutos del combate entre 3:00, 2:00 y 1:30, Cuenta con puntuación, acumulación de amonestaciones (Chui) hasta 5 cumpliendo con la nueva normativa, y también cuenta con la gestión del primer punto anotado (Senshu) para determinar un vencedor en caso de empate y marcador empatado distinto de 0-0, se podra proyectar a otros dispositivos como televisiones para su uso en marcadores de competiciones de bajo nombre que no requieran de una base de datos conectada para la gestión del campeonato.
