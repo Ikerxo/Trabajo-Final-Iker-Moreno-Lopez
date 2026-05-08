@@ -41,9 +41,9 @@ Con ello se busca mejorar la eficiencia organizativa, reducir el impacto ambient
 ### Instalación y ejecución
 
 ```bash
-git clone https://github.com/Ikerxo/Trabajo-Final-Iker-Moreno-L-pez.git
+git clone https://github.com/Ikerxo/Trabajo-Final-Iker-Moreno-Lopez.git
 
-cd Trabajo-Final-Iker-Moreno-L-pez
+cd Trabajo-Final-Iker-Moreno-Lopez
 ```
 
 Abrir el proyecto en Android Studio y ejecutar en un emulador o dispositivo físico.
