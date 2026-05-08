@@ -1,4 +1,4 @@
-# Nombre de la Aplicación
+# Nombre de la aplicación
 
 ### KRT (Karate Records Tool)
 
@@ -8,7 +8,7 @@ Proyecto de Fin de Grado Superior – Desarrollo de Aplicaciones Multiplataforma
 
 ### Descripción
 
-Aplicación desarrollada para prevenir la generación de residuos, mejorar el impacto ambiental, fomentar la sostenibilidad y eficiencia, predicar con la economía circular y cambiar habitos a las organizaciones y personas que utilicen la aplicación.
+Aplicación desarrollada para prevenir la generación de residuos, mejorar el impacto ambiental, fomentar la sostenibilidad y eficiencia, predicar con la economía circular y cambiar hábitos a las organizaciones y personas que utilicen la aplicación.
 
 ---
 
@@ -68,7 +68,7 @@ Iker Moreno López
 
 ### 1. Inicio de sesión
 
-En la primera instancia de la aplicación se encuentra el inicio de sesión, aqui se debera acceder con las credenciales de acceso de un usuario previamente autorizado por el administrador (correo electronico y contraseña)
+En la primera instancia de la aplicación se encuentra el inicio de sesión, aquí se deberá acceder con las credenciales de acceso de un usuario previamente autorizado por el administrador (correo electrónico y contraseña)
 
 A modo de prueba, se pueden utilizar las siguientes credenciales:
 
@@ -81,28 +81,28 @@ A modo de prueba, se pueden utilizar las siguientes credenciales:
 - Contraseña: tribunal2
 
   
-Verificadas las credenciales, se accedera a la home de la aplicación.
+Verificadas las credenciales, se accederá a la home de la aplicación.
 
 ###  2. Home
 
-En la pantalla Home el usuario podra acceder a las diversas funciones de la aplicación pulsando en la opción que desee:
+En la pantalla Home el usuario podrá acceder a las diversas funciones de la aplicación pulsando en la opción que desee:
 
-1. - Crear Nuevo Diagrama: En esta el usuario podra gestionar una categoria como borrador de principio a fin.
+1. - Crear Nuevo Diagrama: En esta el usuario podrá gestionar una categoría como borrador de principio a fin.
   
-2. - Ver Historial de Torneos: En esta el usuario podra consultar los resultados de las distintas categorías que haya ido creando a lo largo del evento.
+2. - Ver Historial de Torneos: En esta el usuario podrá consultar los resultados de las distintas categorías que haya ido creando a lo largo del evento.
 
-3. - Marcador Kumite: En esta el usuario podra manipular un marcador para la modalidad de Kumite totalmente reglamentario a la normativa vigente.
+3. - Marcador Kumite: En esta el usuario podrá manipular un marcador para la modalidad de Kumite totalmente reglamentario a la normativa vigente.
   
 
 #### 2.1 Crear Nuevo Diagrama
 
-Esta función cuenta con varias pantallas, para comenzar nos pedira un nombre para el torneo y un nombre para la categoría ("Campeonato de España", "Junior Masculino >81kg"), despúes nos solicitara en que ronda comienza la categoria ("dieciseisavos""octavos""cuartos""semis"), la siguiente pantalla solicitara el nombre de los competidores y el nombre del club por el que compiten en el orden que tenga la categoria oficial ("Iker""Nisseishi"), una vez hecho esto la aplicación generara un listado con todos los combates en el que se debera elegir en cada enfrentamiento si gana Aka (Rojo) o Ao (Azul), una vez realizados todos los enfrentamientos se debera continuar hasta declarar un campeón y un subcampeón, estos datos se guardaran junto con los datos del torneo a nombre de la cuenta con la que se esta accediendo a la aplicación.
+Esta función cuenta con varias pantallas, para comenzar nos pedirá un nombre para el torneo y un nombre para la categoría ("Campeonato de España", "Junior Masculino >81kg"), después nos solicitará en que ronda comienza la categoría ("dieciseisavos""octavos""cuartos""semis"), la siguiente pantalla solicitará el nombre de los competidores y el nombre del club por el que compiten en el orden que tenga la categoría oficial ("Iker""Nisseishi"), una vez hecho esto la aplicación generará un listado con todos los combates en el que se deberá elegir en cada enfrentamiento si gana Aka (Rojo) o Ao (Azul), una vez realizados todos los enfrentamientos se deberá continuar hasta declarar un campeón y un subcampeón, estos datos se guardarán junto con los datos del torneo a nombre de la cuenta con la que se está accediendo a la aplicación.
 
 #### 2.2 Ver Historial de Torneos
 
-Esta función solicita los datos de las categorías finalizadas por el usuario que esta accediendo a la aplicación, se muestra en una tarjeta el nombre del campeonato, categoria, campeón y subcampeón ("Campeonato de Castilla-La Mancha""Senior Masculino <80kg""Iker (Nisseishi)""David (Kidokan)").
-Estos datos se borraran cada miercoles posterior al fin de semana de competición para evitar saturación e incentivar el poder y la comunicación del administrador.
+Esta función solicita los datos de las categorías finalizadas por el usuario que está accediendo a la aplicación, se muestra en una tarjeta el nombre del campeonato, categoría, campeón y subcampeón ("Campeonato de Castilla-La Mancha""Senior Masculino <80kg""Iker (Nisseishi)""David (Kidokan)").
+Estos datos se borrarán cada miércoles posterior al fin de semana de competición para evitar saturación e incentivar el poder y la comunicación del administrador.
 
 #### 2.3 Marcador Kumite
 
-Esta función muestra por pantalla un marcador de la modalidad de kumite que cumple con los requisitos de la WKF (World Karate Federation), se podrán selecciónar los minutos del combate entre 3:00, 2:00 y 1:30, Cuenta con puntuación, acumulación de amonestaciones (Chui) hasta 5 cumpliendo con la nueva normativa, y también cuenta con la gestión del primer punto anotado (Senshu) para determinar un vencedor en caso de empate y marcador empatado distinto de 0-0, se podra proyectar a otros dispositivos como televisiones para su uso en marcadores de competiciones de bajo nombre que no requieran de una base de datos conectada para la gestión del campeonato.
+Esta función muestra por pantalla un marcador de la modalidad de kumite que cumple con los requisitos de la WKF (World Karate Federation), se podrán seleccionar los minutos del combate entre 3:00, 2:00 y 1:30, cuenta con puntuación, acumulación de amonestaciones (Chui) hasta 5 cumpliendo con la nueva normativa, y también cuenta con la gestión del primer punto anotado (Senshu) para determinar un vencedor en caso de empate y marcador empatado distinto de 0-0, se podrá proyectar a otros dispositivos como televisiones para su uso en marcadores de competiciones de bajo nombre que no requieran de una base de datos conectada para la gestión del campeonato.
