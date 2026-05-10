@@ -77,7 +77,7 @@ A modo de prueba, se pueden utilizar las siguientes credenciales:
 - Contraseña: tribunal1
 
   
-- Correo: t2raikaisensei@gmail.com
+- Correo: t2taikaisensei@gmail.com
 - Contraseña: tribunal2
 
   
