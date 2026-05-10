@@ -1,6 +1,6 @@
 # Nombre de la aplicación
 
-### KRT (Karate Records Tool)
+### TaikaiSensei
 
 Proyecto de Fin de Grado Superior – Desarrollo de Aplicaciones Multiplataforma (DAM)
 
@@ -64,7 +64,7 @@ Iker Moreno López
 
 
 
-## Guía de uso para KRT
+## Guía de uso para TaikaiSensei
 
 ### 1. Inicio de sesión
 
@@ -73,11 +73,11 @@ En la primera instancia de la aplicación se encuentra el inicio de sesión, aqu
 A modo de prueba, se pueden utilizar las siguientes credenciales:
 
 
-- Correo: tribunal1krt@gmail.com 
+- Correo: t1taikaisensei@gmail.com 
 - Contraseña: tribunal1
 
   
-- Correo: tribunal2krt@gmail.com
+- Correo: t2raikaisensei@gmail.com
 - Contraseña: tribunal2
 
   
