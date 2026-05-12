@@ -99,6 +99,11 @@ class MainActivity : ComponentActivity() {
                     composable("pantalla_marcador") {
                         PantallaMarcador(navController = navController)
                     }
+
+                    // Pantalla del marcador usada desde el diagrama
+                    composable("pantalla_marcador_diagrama") {
+                        PantallaMarcadorDiagrama(navController = navController)
+                    }
                 }
             }
         }
