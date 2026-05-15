@@ -38,6 +38,8 @@ fun PantallaDiagrama(
     // Estado para guardar el campeón cuando se determine
     var campeon by remember { mutableStateOf<Competidor?>(null) }
     val scrollState = rememberScrollState()     // Estado para el scroll vertical
+    // Guarda cuántas veces se ha abierto el marcador en cada ronda
+    var aperturasMarcadorPorRonda by remember { mutableStateOf<Map<Int, Int>>(emptyMap()) }
 
     // Cada vez que cambia la ronda actual, hace scroll al inicio
     LaunchedEffect(rondaActualIndex) {
@@ -54,7 +56,12 @@ fun PantallaDiagrama(
         Spacer(modifier = Modifier.height(32.dp))
 
         // Título con número de ronda
-        Text("Ronda ${rondaActualIndex + 1}", style = MaterialTheme.typography.titleLarge, color = Color.White)
+        Text(
+            "Ronda ${rondaActualIndex + 1}",
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.White
+        )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         // Contenedor scrollable para los enfrentamientos de la ronda actual
@@ -72,7 +79,11 @@ fun PantallaDiagrama(
                         .padding(8.dp)
                 ) {
                     // Indicador para que el usuario seleccione ganador
-                    Text("Selecciona al ganador:", style = MaterialTheme.typography.bodyLarge, color = Color.White)
+                    Text(
+                        "Selecciona al ganador:",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.White
+                    )
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -180,21 +191,74 @@ fun PantallaDiagrama(
             }
         }
 
-        Spacer(modifier = Modifier.height(48.dp))
+        // Número de veces que se ha abierto el marcador en la ronda actual
+        val aperturasMarcadorRondaActual = aperturasMarcadorPorRonda[rondaActualIndex] ?: 0
+
+        // Número máximo de veces que se puede abrir el marcador en esta ronda
+        val maxAperturasMarcadorRondaActual = rondaActual.size
+
+        // Separación entre "Avanzar Ronda" y "Abrir marcador Kumite"
+        if (campeon == null) {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        // Botón para abrir el marcador de Kumite desde el diagrama
+        if (campeon == null && aperturasMarcadorRondaActual < maxAperturasMarcadorRondaActual) {
+            Button(
+                onClick = {
+                    val aperturasActuales = aperturasMarcadorPorRonda[rondaActualIndex] ?: 0
+
+                    aperturasMarcadorPorRonda = aperturasMarcadorPorRonda.toMutableMap().apply {
+                        this[rondaActualIndex] = aperturasActuales + 1
+                    }
+
+                    navController.navigate("pantalla_marcador_diagrama")
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .padding(horizontal = 16.dp)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF0D47A1), Color(0xFFB71C1C))
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("Abrir marcador Kumite (${aperturasMarcadorRondaActual + 1}/$maxAperturasMarcadorRondaActual)")
+            }
+
+            // Separación entre "Abrir marcador Kumite" y "Crear nueva plantilla"
+            Spacer(modifier = Modifier.height(16.dp))
+        }
 
         // Si hay campeón, se muestra en pantalla junto con el subcampeón
         campeon?.let { campeonNoNulo ->
             Spacer(modifier = Modifier.height(16.dp))
-            Text("🏆 Campeón: ${campeonNoNulo.nombre} (${campeonNoNulo.club})", style = MaterialTheme.typography.titleMedium, color = Color.White)
+
+            Text(
+                "🏆 Campeón: ${campeonNoNulo.nombre} (${campeonNoNulo.club})",
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.White
+            )
 
             val ultimoEnfrentamiento = rondas.last().last()
             val subcampeon = if (campeonNoNulo.nombre == ultimoEnfrentamiento.competidor1.nombre)
                 ultimoEnfrentamiento.competidor2 else ultimoEnfrentamiento.competidor1
 
-            Text("🥈 Subcampeón: ${subcampeon.nombre} (${subcampeon.club})", style = MaterialTheme.typography.bodyLarge, color = Color.White)
-        }
+            Text(
+                "🥈 Subcampeón: ${subcampeon.nombre} (${subcampeon.club})",
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+        }
 
         // Botón para volver a la pantalla de creación de plantilla de competidores
         Button(
@@ -235,27 +299,33 @@ class Enfrentamiento(
 // Genera la primera ronda a partir de la lista inicial de competidores
 fun generarPrimeraRonda(competidores: List<Competidor>): List<Enfrentamiento> {
     val emparejamientos = mutableListOf<Enfrentamiento>()
+
     // Empareja competidores de dos en dos de forma secuencial
     for (i in competidores.indices step 2) {
         val c1 = competidores.getOrNull(i)
         val c2 = competidores.getOrNull(i + 1)
+
         if (c1 != null && c2 != null) {
             emparejamientos.add(Enfrentamiento(c1, c2))
         }
     }
+
     return emparejamientos
 }
 
 // Genera una ronda a partir de la lista de ganadores de la ronda anterior
 fun generarRonda(ganadores: List<Competidor>): List<Enfrentamiento> {
     val emparejamientos = mutableListOf<Enfrentamiento>()
+
     // Misma lógica de emparejamiento para la nueva ronda
     for (i in ganadores.indices step 2) {
         val c1 = ganadores.getOrNull(i)
         val c2 = ganadores.getOrNull(i + 1)
+
         if (c1 != null && c2 != null) {
             emparejamientos.add(Enfrentamiento(c1, c2))
         }
     }
+
     return emparejamientos
 }
