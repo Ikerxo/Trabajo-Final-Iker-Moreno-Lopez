@@ -96,13 +96,23 @@ En la pantalla Home el usuario podrá acceder a las diversas funciones de la apl
 
 #### 2.1 Crear Nuevo Diagrama
 
-Esta función cuenta con varias pantallas, para comenzar nos pedirá un nombre para el torneo y un nombre para la categoría ("Campeonato de España", "Junior Masculino >81kg"), después nos solicitará en que ronda comienza la categoría ("dieciseisavos""octavos""cuartos""semis"), la siguiente pantalla solicitará el nombre de los competidores y el nombre del club por el que compiten en el orden que tenga la categoría oficial ("Iker""Nisseishi"), una vez hecho esto la aplicación generará un listado con todos los combates en el que se deberá elegir en cada enfrentamiento si gana Aka (Rojo) o Ao (Azul), una vez realizados todos los enfrentamientos se deberá continuar hasta declarar un campeón y un subcampeón, estos datos se guardarán junto con los datos del torneo a nombre de la cuenta con la que se está accediendo a la aplicación.
+Esta función cuenta con varias pantallas, para comenzar nos pedirá un nombre para el torneo y un nombre para la categoría ("Campeonato de España", "Junior Masculino >81kg"), después nos solicitará en que ronda comienza la categoría ("dieciseisavos""octavos""cuartos""semis").
+
+La siguiente pantalla solicitará el nombre de los competidores y el nombre del club por el que compiten en el orden que tenga la categoría oficial ("Iker""Nisseishi").
+
+Ahora la aplicación generara un cuadro con los combates preparados para seleccionar el ganador de cada enfrentamiento de la ronda, también se contara con un boton para acceder al marcador de competición que se podra acceder el mismo numero de veces que enfrentamientos haya en la ronda, cada ronda se reinicia 
+este acceso con el número correspondiente de enfrentamientos en la ronda que se encuentre.
+
+Todos los enfrentamientos se deberá continuar hasta declarar un campeón y un subcampeón, estos datos se guardarán junto con los datos del torneo a nombre de la cuenta con la que se está accediendo a la aplicación.
 
 #### 2.2 Ver Historial de Torneos
 
 Esta función solicita los datos de las categorías finalizadas por el usuario que está accediendo a la aplicación, se muestra en una tarjeta el nombre del campeonato, categoría, campeón y subcampeón ("Campeonato de Castilla-La Mancha""Senior Masculino <80kg""Iker (Nisseishi)""David (Kidokan)").
+
 Estos datos se borrarán cada miércoles posterior al fin de semana de competición para evitar saturación e incentivar el poder y la comunicación del administrador.
 
 #### 2.3 Marcador Kumite
 
-Esta función muestra por pantalla un marcador de la modalidad de kumite que cumple con los requisitos de la WKF (World Karate Federation), se podrán seleccionar los minutos del combate entre 3:00, 2:00 y 1:30, cuenta con puntuación, acumulación de amonestaciones (Chui) hasta 5 cumpliendo con la nueva normativa, y también cuenta con la gestión del primer punto anotado (Senshu) para determinar un vencedor en caso de empate y marcador empatado distinto de 0-0, se podrá proyectar a otros dispositivos como televisiones para su uso en marcadores de competiciones de bajo nombre que no requieran de una base de datos conectada para la gestión del campeonato.
+Esta función muestra por pantalla un marcador de la modalidad de kumite que cumple con los requisitos de la WKF (World Karate Federation), se podrán seleccionar los minutos del combate entre 3:00, 2:00 y 1:30, cuenta con puntuación, acumulación de amonestaciones (Chui) hasta 5 cumpliendo con la nueva 
+normativa, y también cuenta con la gestión del primer punto anotado (Senshu) para determinar un vencedor en caso de empate y marcador empatado distinto de 0-0, se podrá proyectar a otros dispositivos como televisiones para su uso en marcadores de competiciones de bajo nombre que no requieran de una base de 
+datos conectada para la gestión del campeonato.
