@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -30,26 +31,48 @@ fun PantallaDiagrama(
     // Categoría del torneo actual
     categoriaTorneo: String
 ) {
-    // Estado que guarda las rondas, iniciando con la primera generada a partir de competidores
-    var rondas by remember { mutableStateOf(listOf(generarPrimeraRonda(competidoresIniciales))) }
     // Índice para saber qué ronda se está mostrando
-    var rondaActualIndex by remember { mutableStateOf(0) }
-    val rondaActual = rondas[rondaActualIndex]  // Ronda actualmente visible
+    var rondaActualIndex by rememberSaveable { mutableStateOf(0) }
+
     // Estado para guardar el campeón cuando se determine
     var campeon by remember { mutableStateOf<Competidor?>(null) }
-    val scrollState = rememberScrollState()     // Estado para el scroll vertical
+
+    val scrollState = rememberScrollState()
+
     // Guarda cuántas veces se ha abierto el marcador en cada ronda
-    var aperturasMarcadorPorRonda by remember { mutableStateOf<Map<Int, Int>>(emptyMap()) }
+    var aperturasMarcadorPorRonda by rememberSaveable {
+        mutableStateOf<Map<Int, Int>>(emptyMap())
+    }
+
+    // Guarda los ganadores seleccionados por ronda y combate para que no se pierdan al volver del marcador
+    var ganadoresSeleccionados by rememberSaveable {
+        mutableStateOf<Map<String, String>>(emptyMap())
+    }
+
+    // Reconstruye las rondas a partir de los competidores iniciales y los ganadores seleccionados
+    val rondas = remember(competidoresIniciales, ganadoresSeleccionados, rondaActualIndex) {
+        generarRondasHastaIndice(
+            competidoresIniciales = competidoresIniciales,
+            ganadoresSeleccionados = ganadoresSeleccionados,
+            rondaActualIndex = rondaActualIndex
+        )
+    }
+
+    // Evita fallos si por cualquier motivo el índice apunta a una ronda que no existe
+    val indiceRondaSeguro = rondaActualIndex.coerceIn(0, rondas.lastIndex)
+
+    // Ronda actualmente visible
+    val rondaActual = rondas[indiceRondaSeguro]
 
     // Cada vez que cambia la ronda actual, hace scroll al inicio
-    LaunchedEffect(rondaActualIndex) {
+    LaunchedEffect(indiceRondaSeguro) {
         scrollState.animateScrollTo(0)
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF101010))  // Fondo oscuro para mejor contraste
+            .background(Color(0xFF101010))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -57,7 +80,7 @@ fun PantallaDiagrama(
 
         // Título con número de ronda
         Text(
-            "Ronda ${rondaActualIndex + 1}",
+            "Ronda ${indiceRondaSeguro + 1}",
             style = MaterialTheme.typography.titleLarge,
             color = Color.White
         )
@@ -70,12 +93,19 @@ fun PantallaDiagrama(
                 .weight(1f)
                 .verticalScroll(scrollState)
         ) {
-            rondaActual.forEach { enfrentamiento ->
+            rondaActual.forEachIndexed { index, enfrentamiento ->
+
+                // Clave única para identificar cada combate dentro de cada ronda
+                val claveGanador = "ronda_${indiceRondaSeguro}_combate_$index"
+
+                // Ganador guardado para este combate, si existe
+                val ganadorSeleccionado = ganadoresSeleccionados[claveGanador]
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
-                        .border(1.dp, Color.White, RoundedCornerShape(8.dp)) // Borde para delimitar
+                        .border(1.dp, Color.White, RoundedCornerShape(8.dp))
                         .padding(8.dp)
                 ) {
                     // Indicador para que el usuario seleccione ganador
@@ -91,10 +121,16 @@ fun PantallaDiagrama(
                     ) {
                         // Botón para seleccionar competidor 1 como ganador
                         Button(
-                            onClick = { enfrentamiento.ganador = enfrentamiento.competidor1.nombre },
+                            onClick = {
+                                enfrentamiento.ganador = "competidor1"
+
+                                ganadoresSeleccionados = ganadoresSeleccionados.toMutableMap().apply {
+                                    this[claveGanador] = "competidor1"
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (enfrentamiento.ganador == enfrentamiento.competidor1.nombre)
-                                    Color(0xFFB71C1C) else Color(0xFFEF9A9A),  // Color distinto si está seleccionado
+                                containerColor = if (ganadorSeleccionado == "competidor1")
+                                    Color(0xFFB71C1C) else Color(0xFFEF9A9A),
                                 contentColor = Color.White
                             )
                         ) {
@@ -103,9 +139,15 @@ fun PantallaDiagrama(
 
                         // Botón para seleccionar competidor 2 como ganador
                         Button(
-                            onClick = { enfrentamiento.ganador = enfrentamiento.competidor2.nombre },
+                            onClick = {
+                                enfrentamiento.ganador = "competidor2"
+
+                                ganadoresSeleccionados = ganadoresSeleccionados.toMutableMap().apply {
+                                    this[claveGanador] = "competidor2"
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (enfrentamiento.ganador == enfrentamiento.competidor2.nombre)
+                                containerColor = if (ganadorSeleccionado == "competidor2")
                                     Color(0xFF0D47A1) else Color(0xFF90CAF9),
                                 contentColor = Color.White
                             )
@@ -124,10 +166,12 @@ fun PantallaDiagrama(
             Button(
                 onClick = {
                     // Recopila los ganadores seleccionados en la ronda actual
-                    val ganadores = rondaActual.mapNotNull { enf ->
-                        when (enf.ganador) {
-                            enf.competidor1.nombre -> enf.competidor1
-                            enf.competidor2.nombre -> enf.competidor2
+                    val ganadores = rondaActual.mapIndexedNotNull { index, enf ->
+                        val claveGanador = "ronda_${indiceRondaSeguro}_combate_$index"
+
+                        when (ganadoresSeleccionados[claveGanador]) {
+                            "competidor1" -> enf.competidor1
+                            "competidor2" -> enf.competidor2
                             else -> null
                         }
                     }
@@ -135,9 +179,13 @@ fun PantallaDiagrama(
                     if (ganadores.size == 1) {
                         // Si solo queda un ganador, se declara campeón y se guarda torneo en Firestore
                         campeon = ganadores.first()
+
                         val ultimoEnfrentamiento = rondaActual.last()
+
                         val subcampeon = if (campeon!!.nombre == ultimoEnfrentamiento.competidor1.nombre)
-                            ultimoEnfrentamiento.competidor2 else ultimoEnfrentamiento.competidor1
+                            ultimoEnfrentamiento.competidor2
+                        else
+                            ultimoEnfrentamiento.competidor1
 
                         // Referencia a Firestore y usuario autenticado
                         val db = FirebaseFirestore.getInstance()
@@ -148,8 +196,14 @@ fun PantallaDiagrama(
                             "usuarioId" to userId,
                             "nombreTorneo" to nombreTorneo,
                             "categoria" to categoriaTorneo,
-                            "campeon" to mapOf("nombre" to campeon!!.nombre, "club" to campeon!!.club),
-                            "subcampeon" to mapOf("nombre" to subcampeon.nombre, "club" to subcampeon.club),
+                            "campeon" to mapOf(
+                                "nombre" to campeon!!.nombre,
+                                "club" to campeon!!.club
+                            ),
+                            "subcampeon" to mapOf(
+                                "nombre" to subcampeon.nombre,
+                                "club" to subcampeon.club
+                            ),
                             "timestamp" to com.google.firebase.Timestamp.now()
                         )
 
@@ -164,20 +218,20 @@ fun PantallaDiagrama(
                                 Log.e("FIREBASE", "Error al guardar torneo", e)
                             }
                     } else {
-                        // Si quedan varios ganadores, genera una nueva ronda y avanza el índice
-                        val nuevaRonda = generarRonda(ganadores)
-                        rondas = rondas + listOf(nuevaRonda)
-                        rondaActualIndex++
+                        // Si quedan varios ganadores, avanza a la siguiente ronda
+                        rondaActualIndex = indiceRondaSeguro + 1
                     }
                 },
-                enabled = rondaActual.all { it.ganador != null }, // Habilitado solo si todos los ganadores están definidos
+                enabled = rondaActual.isNotEmpty() && rondaActual.indices.all { index ->
+                    ganadoresSeleccionados.containsKey("ronda_${indiceRondaSeguro}_combate_$index")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
                     .padding(horizontal = 16.dp)
                     .background(
                         brush = Brush.horizontalGradient(
-                            colors = listOf(Color(0xFF0D47A1), Color(0xFFB71C1C)) // Degradado visual atractivo
+                            colors = listOf(Color(0xFF0D47A1), Color(0xFFB71C1C))
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ),
@@ -192,7 +246,7 @@ fun PantallaDiagrama(
         }
 
         // Número de veces que se ha abierto el marcador en la ronda actual
-        val aperturasMarcadorRondaActual = aperturasMarcadorPorRonda[rondaActualIndex] ?: 0
+        val aperturasMarcadorRondaActual = aperturasMarcadorPorRonda[indiceRondaSeguro] ?: 0
 
         // Número máximo de veces que se puede abrir el marcador en esta ronda
         val maxAperturasMarcadorRondaActual = rondaActual.size
@@ -206,10 +260,10 @@ fun PantallaDiagrama(
         if (campeon == null && aperturasMarcadorRondaActual < maxAperturasMarcadorRondaActual) {
             Button(
                 onClick = {
-                    val aperturasActuales = aperturasMarcadorPorRonda[rondaActualIndex] ?: 0
+                    val aperturasActuales = aperturasMarcadorPorRonda[indiceRondaSeguro] ?: 0
 
                     aperturasMarcadorPorRonda = aperturasMarcadorPorRonda.toMutableMap().apply {
-                        this[rondaActualIndex] = aperturasActuales + 1
+                        this[indiceRondaSeguro] = aperturasActuales + 1
                     }
 
                     navController.navigate("pantalla_marcador_diagrama")
@@ -233,7 +287,6 @@ fun PantallaDiagrama(
                 Text("Abrir marcador Kumite (${aperturasMarcadorRondaActual + 1}/$maxAperturasMarcadorRondaActual)")
             }
 
-            // Separación entre "Abrir marcador Kumite" y "Crear nueva plantilla"
             Spacer(modifier = Modifier.height(16.dp))
         }
 
@@ -247,9 +300,12 @@ fun PantallaDiagrama(
                 color = Color.White
             )
 
-            val ultimoEnfrentamiento = rondas.last().last()
+            val ultimoEnfrentamiento = rondaActual.last()
+
             val subcampeon = if (campeonNoNulo.nombre == ultimoEnfrentamiento.competidor1.nombre)
-                ultimoEnfrentamiento.competidor2 else ultimoEnfrentamiento.competidor1
+                ultimoEnfrentamiento.competidor2
+            else
+                ultimoEnfrentamiento.competidor1
 
             Text(
                 "🥈 Subcampeón: ${subcampeon.nombre} (${subcampeon.club})",
@@ -292,7 +348,7 @@ class Enfrentamiento(
     val competidor2: Competidor,
     ganadorInicial: String? = null,
 ) {
-    // Estado mutable para guardar el ganador seleccionado (puede ser null si no se ha elegido)
+    // Estado mutable para guardar el ganador seleccionado
     var ganador by mutableStateOf(ganadorInicial)
 }
 
@@ -328,4 +384,64 @@ fun generarRonda(ganadores: List<Competidor>): List<Enfrentamiento> {
     }
 
     return emparejamientos
+}
+
+// Reconstruye las rondas necesarias hasta llegar a la ronda actual
+fun generarRondasHastaIndice(
+    competidoresIniciales: List<Competidor>,
+    ganadoresSeleccionados: Map<String, String>,
+    rondaActualIndex: Int
+): List<List<Enfrentamiento>> {
+
+    // Lista donde se guardan las rondas generadas
+    val rondasGeneradas = mutableListOf<List<Enfrentamiento>>()
+
+    // Al principio se usan los competidores introducidos por el usuario
+    var competidoresRonda = competidoresIniciales
+
+    // Genera las rondas desde la primera hasta la ronda actual
+    for (indiceRonda in 0..rondaActualIndex) {
+
+        // Si es la primera ronda, se genera con los competidores iniciales.
+        // Si no, se genera con los ganadores de la ronda anterior.
+        val ronda = if (indiceRonda == 0) {
+            generarPrimeraRonda(competidoresRonda)
+        } else {
+            generarRonda(competidoresRonda)
+        }
+
+        // Se añade la ronda generada a la lista
+        rondasGeneradas.add(ronda)
+
+        // Si ya se ha llegado a la ronda actual, se detiene el proceso
+        if (indiceRonda == rondaActualIndex) {
+            break
+        }
+
+        // Se obtienen los ganadores seleccionados de esta ronda
+        val ganadores = ronda.mapIndexedNotNull { index, enfrentamiento ->
+            val claveGanador = "ronda_${indiceRonda}_combate_$index"
+
+            when (ganadoresSeleccionados[claveGanador]) {
+                "competidor1" -> enfrentamiento.competidor1
+                "competidor2" -> enfrentamiento.competidor2
+                else -> null
+            }
+        }
+
+        // Si todavía no hay ganadores, no se puede generar la siguiente ronda
+        if (ganadores.isEmpty()) {
+            break
+        }
+
+        // Los ganadores pasan a ser los competidores de la siguiente ronda
+        competidoresRonda = ganadores
+    }
+
+    // Devuelve las rondas generadas, o una ronda vacía si no se generó ninguna
+    return if (rondasGeneradas.isNotEmpty()) {
+        rondasGeneradas
+    } else {
+        listOf(emptyList())
+    }
 }
