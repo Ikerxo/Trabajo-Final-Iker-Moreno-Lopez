@@ -73,12 +73,8 @@ En la primera instancia de la aplicación se encuentra el inicio de sesión, aqu
 A modo de prueba, se pueden utilizar las siguientes credenciales:
 
 
-- Correo: t1taikaisensei@gmail.com 
-- Contraseña: tribunal1
-
-  
-- Correo: t2taikaisensei@gmail.com
-- Contraseña: tribunal2
+- Correo: petazetaklk@gmail.com
+- Contraseña: TribunalTFG
 
   
 Verificadas las credenciales, se accederá a la home de la aplicación.
